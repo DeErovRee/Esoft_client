@@ -4,7 +4,7 @@ import { NavLink, Navigate } from 'react-router-dom'
 import { Context } from '../index'
 import { TODOLIST_ROUTE } from '../utils/consts'
 import { observer } from 'mobx-react-lite'
-import { fetchTask } from '../http/tasksAPI'
+import { fetchPriority, fetchSubuser, fetchTask } from '../http/tasksAPI'
 
 export const redirect = () => {
     return <Navigate to={TODOLIST_ROUTE} />
@@ -22,9 +22,16 @@ export const Auth = observer(() => {
             e.preventDefault()
             const userData = await login(email, password)
             user.setUser(userData)
+            user.setIsAuth(true)
             const userTasks = await fetchTask(userData.id)
             tasks.setTasks(userTasks)
-            user.setIsAuth(true)
+            const subusers = await fetchSubuser(user.user.id)
+            tasks.setSubuser(subusers)
+            const priority = await fetchPriority()
+            tasks.setPriority(priority)
+            if (window.location.href !== 'http://localhost:3000/todo') {
+                window.location.replace('http://localhost:3000/todo')
+            }
         } catch(error) {
             alert(error.response.data.message)
         }
@@ -49,9 +56,9 @@ export const Auth = observer(() => {
                     <input value={password} onChange={e => setPassword(e.target.value)} type="password" className="form-control" id="exampleInputPassword1"/>
                 </div>
                 <NavLink to='/registration'>Зарегестрироваться</NavLink>
-                <button type="submit" className="btn btn-primary mt-1" style={{
+                <button className="btn btn-primary mt-1" style={{
                     width: '100%'
-                }} onClick={e=>signIn(e)}>Войти</button>
+                }} onClick={signIn}>Войти</button>
             </form>
         </div>
         

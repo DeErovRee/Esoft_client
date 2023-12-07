@@ -9,13 +9,13 @@ export const AppRouter = observer(() => {
     const {user} = useContext(Context)
     return(
         <Routes>
-            {user.user.id && user.isAuth && authRoutes.map(({path, Component}) => 
+            {user.user.id && authRoutes.map(({path, Component}) => 
                 <Route key={path} path={path} element={Component} exact/>
             )}
             {publicRoutes.map(({path, Component}) => 
                 <Route key={path} path={path} element={Component} exact/>
             )}
-            <Route path='*' element={<Auth />}/>
+            <Route path='*' element={<Auth />}/>    
         </Routes>
     )
 })

@@ -22,7 +22,7 @@ export const App = observer(() => {
   }, [])
 
   if (loading) {
-    return <Spinner animation={'grow'} />
+    return <Spinner animation={'grow'}/>
   }
 
   return (

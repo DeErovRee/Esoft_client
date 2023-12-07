@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { Context } from '../index'
 import { observer } from 'mobx-react-lite'
-import { redirect } from '../pages/Auth'
 
 export const Navbar = observer(() => {
     const {user} = useContext(Context)
@@ -23,9 +22,7 @@ export const Navbar = observer(() => {
                         </button>
                     </>
                     :
-                    <button className="btn btn-primary" onClick={() => {
-                        return redirect()
-                    }}>
+                    <button className="btn btn-primary" >
                         Войти
                     </button>
                 }

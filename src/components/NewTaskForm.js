@@ -19,11 +19,9 @@ export const NewTaskForm = observer(() => {
                 setSuccess(false)
             }, 5000)
             e.target.reset()
-            fetchTask().then(data => tasks.setTasks(data))
+            fetchTask(user.user.id).then(data => tasks.setTasks(data))
         }
-
         return console.log(response)
-        
     }
 
     return(
@@ -46,7 +44,7 @@ export const NewTaskForm = observer(() => {
                     <option defaultValue={" "}>Выберите исполнителя</option>
                     {tasks.subuser && tasks.subuser.map((subuser) => {
                                 return(
-                                    <option key={subuser[0].id} value={`${subuser[0].id}`}>{subuser[0].name} {subuser[0].surname}</option>
+                                    <option key={subuser.id} value={`${subuser.id}`}>{subuser.name} {subuser.surname}</option>
                                 )
                             })}
                 </select>
@@ -58,6 +56,7 @@ export const NewTaskForm = observer(() => {
                         </div>
                         <select className="custom-select" id="inputGroupSelect01">
                             <option defaultValue={"3"}>Выберите приоритет</option>
+                            {console.log(tasks)}
                             {tasks.priority && tasks.priority.map((priority) => {
                                 return(
                                     <option key={priority.id} value={`${priority.id}`}>{priority.name}</option>

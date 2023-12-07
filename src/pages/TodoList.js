@@ -4,19 +4,9 @@ import { Context } from '../index'
 import { NewTaskForm } from '../components/NewTaskForm'
 import { fetchStatus, fetchSubuser, fetchTask } from '../http/tasksAPI'
 import { TaskCard } from '../components/TaskCard'
-import { check } from '../http/userApi'
 
 export const TodoList = observer(() => {
     const {tasks} = useContext(Context)
-    const {user} = useContext(Context)
-
-    const [token, setToken] = useState(localStorage.getItem('token'))
-
-    useEffect(()=>{
-        fetchTask(user.id).then(data => tasks.setTasks(data))
-        fetchStatus().then(data => tasks.setStatus(data))
-        fetchSubuser(user.id).then(data => tasks.setSubuser(data))
-    }, [token])
 
     return(
         <>

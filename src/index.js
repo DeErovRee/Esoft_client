@@ -5,7 +5,6 @@ import UserStore from './store/UserStore';
 import TodoListStore from './store/TodoListStore';
 
 export const Context = createContext(null)
-console.log(process.env.REACT_APP_API_URL)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

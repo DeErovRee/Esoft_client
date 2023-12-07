@@ -20,6 +20,11 @@ export const fetchTask = async(id) => {
     return data
 }
 
+export const fetchOneTask = async(id) => {
+    const {data} = await $authHost.get(`api/task/single/${id}`)
+    return data
+}
+
 export const fetchStatus = async() => {
     const {data} = await $host.get('api/status')
     return data

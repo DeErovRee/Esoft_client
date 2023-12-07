@@ -2,27 +2,29 @@ import React, { useContext, useState } from 'react'
 import { login } from '../http/userApi'
 import { NavLink, Navigate } from 'react-router-dom'
 import { Context } from '../index'
-import { LOGIN_ROUTE, TODOLIST_ROUTE } from '../utils/consts'
+import { TODOLIST_ROUTE } from '../utils/consts'
 import { observer } from 'mobx-react-lite'
+import { fetchTask } from '../http/tasksAPI'
 
 export const redirect = () => {
-    console.log(TODOLIST_ROUTE)
     return <Navigate to={TODOLIST_ROUTE} />
 }
 
 export const Auth = observer(() => {
 
     const {user} = useContext(Context)
+    const {tasks} = useContext(Context)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     
     const signIn = async (e) => {
         try {
             e.preventDefault()
-            const data = await login(email, password)
-            user.setUser(data)
+            const userData = await login(email, password)
+            user.setUser(userData)
+            const userTasks = await fetchTask(userData.id)
+            tasks.setTasks(userTasks)
             user.setIsAuth(true)
-            window.location.replace('http://localhost:3000/todo')
         } catch(error) {
             alert(error.response.data.message)
         }
